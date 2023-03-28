@@ -12,8 +12,16 @@
         android:theme="@style/Theme.Engster"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".Note"
+            android:exported="true"
+            android:parentActivityName=".Home"/>
+        <activity
+            android:name=".Home"
+            android:exported="true" />
+        <activity
+            android:name=".SignIn"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
