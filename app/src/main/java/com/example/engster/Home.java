@@ -18,12 +18,13 @@ import android.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Objects;
+
 public class Home extends AppCompatActivity {
     DrawerLayout drLayout;
     NavigationView nvView;
     FloatingActionButton fab;
     ActionBarDrawerToggle abdt;//Acronyname of ActionBarDrawerToggle
-
 
 
     @Override
@@ -60,10 +61,9 @@ public class Home extends AppCompatActivity {
                         break;
 
                     case R.id.quiz:
-                        Log.i("Menu_TAG", "Quiz item clicked");
-                        drLayout.closeDrawer(GravityCompat.START);
+                        Intent quizIntent = new Intent(Home.this, Quiz.class);
+                        startActivity(quizIntent);
                         break;
-
                     case R.id.search:
                         Log.i("Menu_TAG", "Search item clicked");
                         drLayout.closeDrawer(GravityCompat.START);
@@ -79,11 +79,9 @@ public class Home extends AppCompatActivity {
                         drLayout.closeDrawer(GravityCompat.START);
                         break;
                 }
-
                 return true;
             }
         });
-
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -92,4 +90,6 @@ public class Home extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
