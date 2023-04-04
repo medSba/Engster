@@ -12,12 +12,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Home extends AppCompatActivity {
@@ -25,14 +36,18 @@ public class Home extends AppCompatActivity {
     NavigationView nvView;
     FloatingActionButton fab;
     ActionBarDrawerToggle abdt;//Acronyname of ActionBarDrawerToggle
-
-
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
+    ListView listv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         getSupportActionBar().setTitle("Home");
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(this,gso);
 
         fab=findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +62,7 @@ public class Home extends AppCompatActivity {
         nvView=findViewById(R.id.navView);
 
         abdt=new ActionBarDrawerToggle(this,drLayout,R.string.open,R.string.close);
+
         drLayout.addDrawerListener(abdt);
         abdt.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -78,6 +94,11 @@ public class Home extends AppCompatActivity {
                         Log.i("Menu_TAG", "Support item clicked");
                         drLayout.closeDrawer(GravityCompat.START);
                         break;
+                    case R.id.logout:
+                        gsc.signOut();
+                        finish();
+                        startActivity(new Intent(Home.this,SignIn.class));
+                        break;
                 }
                 return true;
             }
@@ -90,6 +111,4 @@ public class Home extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
