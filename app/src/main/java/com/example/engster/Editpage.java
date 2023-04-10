@@ -42,7 +42,6 @@ public class Editpage extends AppCompatActivity {
         radword=findViewById(R.id.upradioword);
         radexa=findViewById(R.id.upradioexample);
         edit=findViewById(R.id.update);
-        lsvimg=findViewById(R.id.listvImages);
 
         db=new MyDataBase(this);
         // Get the word and expression data from the intent

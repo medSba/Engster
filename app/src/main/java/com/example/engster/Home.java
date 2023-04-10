@@ -3,10 +3,12 @@ package com.example.engster;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -93,8 +95,13 @@ public class Home extends AppCompatActivity {
                         break;
 
                     case R.id.night:
-                        Log.i("Menu_TAG", "Mode Night item clicked");
-                        drLayout.closeDrawer(GravityCompat.START);
+                        int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+
+                        int newNightMode = currentNightMode == AppCompatDelegate.MODE_NIGHT_YES ? AppCompatDelegate.MODE_NIGHT_NO : AppCompatDelegate.MODE_NIGHT_YES;
+
+                        AppCompatDelegate.setDefaultNightMode(newNightMode);
+
+                        recreate();
                         break;
 
                     case R.id.support:
@@ -128,4 +135,5 @@ public class Home extends AppCompatActivity {
 
         listv.setAdapter(na);
     }
+
 }
