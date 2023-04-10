@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Editpage">
+
+    <EditText
+        android:id="@+id/wupdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Word" />
+
+    <EditText
+        android:id="@+id/exupdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Expression"
+        app:layout_constraintTop_toBottomOf="@+id/word" />
+
+    <RadioGroup
+        android:id="@+id/upradioType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/upradioword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Word" />
+
+        <RadioButton
+            android:id="@+id/upradioexample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Example" />
+    </RadioGroup>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:backgroundTint="#175f62"
+        app:srcCompat="@drawable/baseline_check_24"
+        android:layout_gravity="center" />
+
+
+</LinearLayout>

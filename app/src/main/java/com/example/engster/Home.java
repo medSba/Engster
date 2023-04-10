@@ -6,30 +6,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
 
 public class Home extends AppCompatActivity {
     DrawerLayout drLayout;
@@ -39,6 +31,8 @@ public class Home extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     ListView listv;
+
+    MyDataBase db=new MyDataBase(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,17 +43,30 @@ public class Home extends AppCompatActivity {
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
 
+
+        listv=findViewById(R.id.listv);
+        drLayout=findViewById(R.id.homepage);
+        nvView=findViewById(R.id.navView);
         fab=findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(Home.this,Note.class);
+                Intent intent=new Intent(Home.this, Addpage.class);
                 startActivity(intent);
             }
         });
 
-        drLayout=findViewById(R.id.homepage);
-        nvView=findViewById(R.id.navView);
+
+        listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Notes select= (Notes) parent.getItemAtPosition(position);
+                Intent intent=new Intent(Home.this,Editpage.class);
+                intent.putExtra("id",select.getId());
+                startActivity(intent);
+            }
+        });
 
         abdt=new ActionBarDrawerToggle(this,drLayout,R.string.open,R.string.close);
 
@@ -110,5 +117,15 @@ public class Home extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Notes> notes = db.getAll();
+
+        noteAdapter na=new noteAdapter(this,R.layout.lsv,notes);
+
+        listv.setAdapter(na);
     }
 }
