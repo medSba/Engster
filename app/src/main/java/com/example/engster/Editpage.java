@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,9 +26,7 @@ public class Editpage extends AppCompatActivity {
     private MyDataBase db;
     private FloatingActionButton edit;
     private int wordExpressionId;
-    private ListView lsvimg;
     private RadioButton radword,radexa;
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,7 @@ public class Editpage extends AppCompatActivity {
             String word = bundle.getString("wordexample");
             String expression = bundle.getString("expression");
             String type = bundle.getString("type");
+
 
             // Set the retrieved data to the corresponding views
             upword.setText(word);

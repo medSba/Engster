@@ -12,12 +12,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.common.util.IOUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ public class Addpage extends AppCompatActivity {
     private EditText ex1,word;
     private Button btnimage;
     private FloatingActionButton ok;
-
+    ImageView imgv;
     private RadioGroup radioType;
     private MyDataBase db;
     private static final int PICK_IMAGE=100;
@@ -64,7 +67,9 @@ public class Addpage extends AppCompatActivity {
                     if (result > 0) {
                         int wordExpressionId = (int) result;
                         for (byte[] image : images) {
-                            Images img=new Images(image,wordExpressionId);
+                            Images img=new Images();
+                            img.setImageData(image);
+                            img.setWordExpressionId(wordExpressionId);
                             db.insertImages(img);
                         }
                         Toast.makeText(Addpage.this, "Data inserted successfully as word", Toast.LENGTH_SHORT).show();
@@ -78,7 +83,9 @@ public class Addpage extends AppCompatActivity {
                     if (result > 0) {
                         int wordExpressionId = (int) result;
                         for (byte[] image : images) {
-                            Images img=new Images(image,wordExpressionId);
+                            Images img=new Images();
+                            img.setImageData(image);
+                            img.setWordExpressionId(wordExpressionId);
                             db.insertImages(img);
                         }
                         Toast.makeText(Addpage.this, "Data inserted successfully as example", Toast.LENGTH_SHORT).show();
@@ -88,13 +95,12 @@ public class Addpage extends AppCompatActivity {
                 } else {
                     Toast.makeText(Addpage.this, "Please select a type", Toast.LENGTH_SHORT).show();
                 }
+
                 Intent back = new Intent(Addpage.this, Home.class);
                 startActivity(back);
             }
+
         });
-
-
-
 
         btnimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,8 +109,12 @@ public class Addpage extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
                 startActivityForResult(Intent.createChooser(intent, "Select Images"), PICK_IMAGE);
+
             }
         });
+
+
+
     }
 
 
@@ -118,8 +128,8 @@ public class Addpage extends AppCompatActivity {
                     Uri uri = data.getClipData().getItemAt(i).getUri();
                     try {
                         InputStream is = getContentResolver().openInputStream(uri);
-                        Bitmap stream = BitmapFactory.decodeStream(is);
-                        byte[] image = IOUtils.toByteArray(is);
+                       Bitmap stream = BitmapFactory.decodeStream(is);
+                        byte[] image = getBytes(stream);
                         images.add(image);
                         is.close();
                     } catch (IOException e) {
@@ -133,7 +143,7 @@ public class Addpage extends AppCompatActivity {
                 try {
                     InputStream is = getContentResolver().openInputStream(uri);
                     Bitmap stream = BitmapFactory.decodeStream(is);
-                    byte[] image = IOUtils.toByteArray(is);
+                    byte[] image = getBytes(stream);
                     images.add(image);
                     is.close();
                     Toast.makeText(this, "Selected 1 image", Toast.LENGTH_SHORT).show();
@@ -144,6 +154,11 @@ public class Addpage extends AppCompatActivity {
         }
     }
 
+    private static byte[] getBytes(Bitmap bitmap) {
+        ByteArrayOutputStream st=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,0,st);
+        return st.toByteArray();
+    }
 
 
 }

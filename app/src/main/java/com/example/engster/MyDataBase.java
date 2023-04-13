@@ -6,6 +6,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class MyDataBase extends SQLiteOpenHelper {
 
     // Image table
     private static final String TABLE_IMAGE = "image";
+    private static final String ID_IMAGE = "image_id";
     private static final String COLUMN_IMAGE_URI = "image_uri";
     private static final String COLUMN_WORD_EXPRESSION_ID = "word_expression_id";
 
@@ -47,11 +50,10 @@ public class MyDataBase extends SQLiteOpenHelper {
 
         // Create Image table
         String createImageTableQuery = "CREATE TABLE " + TABLE_IMAGE + "("
-                + COLUMN_IMAGE_URI + " TEXT NOT NULL, "
+                + ID_IMAGE +" INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_IMAGE_URI + " BLOB NOT NULL, "
                 + COLUMN_WORD_EXPRESSION_ID + " INTEGER NOT NULL, "
-                + "FOREIGN KEY (" + COLUMN_WORD_EXPRESSION_ID + ") REFERENCES " + TABLE_WORD_EXPRESSION + "(" + COLUMN_ID + "), "
-                + "PRIMARY KEY (" + COLUMN_IMAGE_URI + ", " + COLUMN_WORD_EXPRESSION_ID + ")"
-                + ")";
+                + "FOREIGN KEY (" + COLUMN_WORD_EXPRESSION_ID + ") REFERENCES " + TABLE_WORD_EXPRESSION + "(" + COLUMN_ID + ") )";
         db.execSQL(createImageTableQuery);
         db.close();
     }
@@ -128,7 +130,6 @@ public class MyDataBase extends SQLiteOpenHelper {
         // Delete the rows with matching wordExpressionId
         db.delete(TABLE_IMAGE, COLUMN_WORD_EXPRESSION_ID + "=?", new String[]{String.valueOf(id)});
     }
-
 
 }
 

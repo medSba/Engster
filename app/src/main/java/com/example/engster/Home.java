@@ -130,9 +130,7 @@ public class Home extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         List<Notes> notes = db.getAll();
-
         noteAdapter na=new noteAdapter(this,R.layout.lsv,notes);
-
         listv.setAdapter(na);
     }
 
