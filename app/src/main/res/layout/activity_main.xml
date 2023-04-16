@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
+    android:background="@drawable/br"
     tools:context=".SignIn">
 
     <androidx.cardview.widget.CardView
@@ -13,7 +13,7 @@
         android:layout_centerInParent="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/material_on_primary_emphasis_high_type"
+        app:cardBackgroundColor="@color/material_on_primary_disabled"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
