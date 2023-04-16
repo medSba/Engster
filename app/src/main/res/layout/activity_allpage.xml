@@ -35,6 +35,12 @@
         android:id="@+id/ans"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Write your Expression"
+        />
+    <EditText
+        android:id="@+id/imgans"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:hint="Write your Answer"
         />
     <LinearLayout

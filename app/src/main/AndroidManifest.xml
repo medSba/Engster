@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -15,19 +15,26 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Engster"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".Support"
+            android:exported="false" />
+        <activity
+            android:name=".Search"
+            android:exported="true"
+            android:parentActivityName=".Home" />
         <activity
             android:name=".Imagepage"
             android:exported="true"
-            android:parentActivityName=".Quiz"/>
+            android:parentActivityName=".Quiz" />
         <activity
             android:name=".WordExpage"
             android:exported="true"
-            android:parentActivityName=".Quiz"/>
+            android:parentActivityName=".Quiz" />
         <activity
             android:name=".Allpage"
             android:exported="true"
-            android:parentActivityName=".Quiz"/>
+            android:parentActivityName=".Quiz" />
         <activity
             android:name=".Editpage"
             android:exported="true"
@@ -46,7 +53,7 @@
         <activity
             android:name=".SignIn"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" >
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

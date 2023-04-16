@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +19,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,7 +30,7 @@ public class Editpage extends AppCompatActivity {
     private FloatingActionButton edit;
     private int wordExpressionId;
     private RadioButton radword,radexa;
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "Range"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,27 +49,21 @@ public class Editpage extends AppCompatActivity {
         db=new MyDataBase(this);
         // Get the word and expression data from the intent
         Bundle bundle = getIntent().getExtras();
+        String word="";
+        String expression="";
         if (bundle != null) {
             wordExpressionId = bundle.getInt("id");
-            String word = bundle.getString("wordexample");
-            String expression = bundle.getString("expression");
-            String type = bundle.getString("type");
+            SQLiteDatabase s=db.getReadableDatabase();
+            Cursor cur=s.rawQuery("SELECT * FROM word_expression WHERE id="+wordExpressionId,null);
+            if (cur.moveToFirst()){
+                word=cur.getString(cur.getColumnIndex("wordexample"));
+                expression=cur.getString(cur.getColumnIndex("expression"));
+            }
 
 
-            // Set the retrieved data to the corresponding views
+            // Set the retrieved data to the cor responding views
             upword.setText(word);
             upexpression.setText(expression);
-            radiotype.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    if (checkedId==R.id.upradioword){
-                        radiotype.check(checkedId);
-                    } else if (checkedId==R.id.upradioexample) {
-                        radiotype.check(checkedId);
-                    }
-                }
-            });
         }
 
         // Handle update button click
@@ -81,6 +78,8 @@ public class Editpage extends AppCompatActivity {
                     updatedType = "word";
                 } else if (radexa.isChecked()) {
                     updatedType = "example";
+                }else {
+                    Toast.makeText(Editpage.this, "Please check a type", Toast.LENGTH_SHORT).show();
                 }
 
 

@@ -85,8 +85,8 @@ public class Imagepage extends AppCompatActivity {
         SQLiteDatabase db = new MyDataBase(this).getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT expression FROM word_expression WHERE id = ?",new String[]{String.valueOf(id)});
         if (cursor.moveToFirst()) {
-            String columnexpression = cursor.getString(cursor.getColumnIndex("expression"));
-            correctExpression = columnexpression ; // Fixed the concatenation syntax
+            correctExpression = cursor.getString(cursor.getColumnIndex("expression"));
+
         }
         cursor.close();
         db.close();
@@ -98,8 +98,7 @@ public class Imagepage extends AppCompatActivity {
         SQLiteDatabase db = new MyDataBase(this).getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT wordexample FROM word_expression WHERE id = ?",new String[]{String.valueOf(id)});
         if (cursor.moveToFirst()) {
-            String columnexpression = cursor.getString(cursor.getColumnIndex("wordexample"));
-            correctword = columnexpression ; // Fixed the concatenation syntax
+            correctword = cursor.getString(cursor.getColumnIndex("wordexample"));
         }
         cursor.close();
         db.close();

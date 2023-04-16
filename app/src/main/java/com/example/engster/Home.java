@@ -81,8 +81,8 @@ public class Home extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.home:
-                        Log.i("Menu_TAG", "Home item clicked");
-                        drLayout.closeDrawer(GravityCompat.START);
+                        Intent home=new Intent(Home.this,Home.class);
+                        startActivity(home);
                         break;
 
                     case R.id.quiz:
@@ -90,8 +90,8 @@ public class Home extends AppCompatActivity {
                         startActivity(quizIntent);
                         break;
                     case R.id.search:
-                        Log.i("Menu_TAG", "Search item clicked");
-                        drLayout.closeDrawer(GravityCompat.START);
+                        Intent search=new Intent(Home.this,Search.class);
+                        startActivity(search);
                         break;
 
                     case R.id.night:
@@ -105,8 +105,8 @@ public class Home extends AppCompatActivity {
                         break;
 
                     case R.id.support:
-                        Log.i("Menu_TAG", "Support item clicked");
-                        drLayout.closeDrawer(GravityCompat.START);
+                        Intent sup=new Intent(Home.this,Support.class);
+                        startActivity(sup);
                         break;
                     case R.id.logout:
                         gsc.signOut();
